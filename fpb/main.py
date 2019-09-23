@@ -9,6 +9,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('module')
 parser.add_argument('-i', '--iterations', default=10, type=int)
 parser.add_argument('-s', '--size', type=int)
+parser.add_argument('-W', '--warmup', action="store_false", default=True)
 
 
 def main():
@@ -26,6 +27,8 @@ def main():
         'python_version': sys.version,
     }
     data.update(runner.extra_data)
+    if args.warmup:
+        runner.start()
     for _ in range(args.iterations):
         time_taken = runner.start()
         data['values'].append(time_taken)
