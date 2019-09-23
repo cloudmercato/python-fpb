@@ -7,6 +7,7 @@ class Runner:
     """Base class for all runner."""
     random = random
     math = math
+    extra_data = {}
 
     def __init__(self, **kwargs):
         for key, value in kwargs.items():
@@ -26,7 +27,7 @@ class Runner:
         start_time = time.time()
         output = self.run(data, **run_kwargs)
         end_time = time.time()
-        return end_time - start_time
+        return (end_time - start_time) * 1000
 
     def prepare(self, **kwargs):
         msg = "Data preparation isn't set."
