@@ -8,7 +8,9 @@ import fpb
 parser = argparse.ArgumentParser()
 parser.add_argument('module')
 parser.add_argument('-i', '--iterations', default=10, type=int)
-parser.add_argument('-s', '--size', type=int)
+parser.add_argument('-s', '--size', type=int, default=10**6)
+parser.add_argument('-S', '--size_y', type=int, default=3)
+parser.add_argument('-d', '--dtype', default='float16')
 parser.add_argument('-W', '--warmup', action="store_false", default=True)
 
 
@@ -25,7 +27,10 @@ def main():
         'test': module_path,
         'iterations': args.iterations,
         'python_version': sys.version,
+        'dtype': runner.get_dtype(),
     }
+    if '2d' in args.module:
+        data['size_y'] = args.size_y
     data.update(runner.extra_data)
     if args.warmup:
         runner.start()

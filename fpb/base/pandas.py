@@ -13,6 +13,17 @@ class BasePandasRunner(numpy.BaseNumpyRunner):
 
 class BasePandas1dRunner(common.Runner1dMixin, BasePandasRunner):
     """Helpers for Pandas Runners in 1 dimension array"""
-    def prepare(self, size):
-        data = self.pd.DataFrame(self.np.random.sample(size))
+    def prepare(self, size, dtype):
+        np_data = self.np.random.sample(size).astype(dtype)
+        data = self.pd.DataFrame(np_data)
+        return data
+
+
+class BasePandas2dRunner(common.Runner2dMixin, BasePandasRunner):
+    """Helpers for Pandas Runners in 2 dimension array"""
+    def prepare(self, size, size_y, dtype):
+        np_data = self.np.random.sample(size*size_y)\
+            .reshape(size, size_y)\
+            .astype(dtype)
+        data = self.pd.DataFrame(np_data, dtype=np_data.dtype)
         return data
