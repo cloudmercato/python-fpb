@@ -31,7 +31,7 @@ class BaseDask1dRunner(common.Runner1dMixin, BaseDaskRunner):
 class BaseDask2dRunner(common.Runner2dMixin, BaseDaskRunner):
     """Helpers for Dask Runners in 2 dimension array"""
     def prepare(self, size, size_y, dtype):
-        chunksize = (1, int(size / multiprocessing.cpu_count()))
+        chunksize = (int(size / multiprocessing.cpu_count()), 1)
         data = self.da.random\
             .random((size, size_y))\
             .rechunk(chunksize)\

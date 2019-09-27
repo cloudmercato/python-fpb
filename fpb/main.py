@@ -11,7 +11,7 @@ parser.add_argument('-i', '--iterations', default=10, type=int)
 parser.add_argument('-s', '--size', type=int, default=10**6)
 parser.add_argument('-S', '--size_y', type=int, default=3)
 parser.add_argument('-d', '--dtype', default='float16')
-parser.add_argument('-W', '--warmup', action="store_false", default=True)
+parser.add_argument('-W', '--warmup', default=1)
 
 
 def main():
@@ -23,6 +23,7 @@ def main():
     # Run
     data = {
         'values': [],
+        'memory_errors': 0,
         'size': args.size,
         'test': module_path,
         'iterations': args.iterations,
@@ -32,11 +33,24 @@ def main():
     if '2d' in args.module:
         data['size_y'] = args.size_y
     data.update(runner.extra_data)
-    if args.warmup:
-        runner.start()
+    for _ in range(args.warmup):
+        try:
+            runner.start()
+        except Exception as err:
+            print(err)
     for _ in range(args.iterations):
-        time_taken = runner.start()
+        try:
+            time_taken = runner.start()
+        except MemoryError as err:
+            data['memory_errors'] += 1
+            print(err)
+            continue
         data['values'].append(time_taken)
+
+    if not data['values']:
+        print("No successful test")
+        sys.exit(1)
+
     data['average'] = np.average(data['values'])
     data['stddev'] = np.std(data['values'])
     data['percentile_99'] = np.percentile(data['values'], 99)

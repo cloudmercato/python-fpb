@@ -12,6 +12,11 @@ class BaseNumpyRunner(common.Runner):
         """Used by some framework"""
         return self.dtype
 
+    def check_output(self, output):
+        if self.np.isinf(output).any():
+            raise self.TypeTooSmall()
+
+
 
 class BaseNumpy1dRunner(common.Runner1dMixin, BaseNumpyRunner):
     """Helpers for Numpy Runners in 1 dimension array"""
