@@ -2,23 +2,24 @@ import sys
 import argparse
 import importlib
 import logging
+import json
 import numpy as np
 import fpb
 
 logger = logging.getLogger('fpb')
 
-
 parser = argparse.ArgumentParser()
 parser.add_argument('module')
 parser.add_argument('-i', '--iterations', default=10, type=int)
+parser.add_argument('-v', '--verbose', action='count', default=0)
+parser.add_argument('-j', '--json', action='store_true', default=False)
 parser.add_argument('-s', '--size', type=int, default=10**6)
 parser.add_argument('-S', '--size_y', type=int, default=3)
 parser.add_argument('-d', '--dtype', default='float16')
-parser.add_argument('-v', '--verbose', action='count', default=0)
-parser.add_argument('-W', '--warmup', default=1)
+parser.add_argument('-W', '--warmup', type=int, default=1)
 
 
-def main():
+def console():
     args = parser.parse_args()
     # Logger
     logger.setLevel(50 - args.verbose*10)
@@ -73,16 +74,15 @@ def main():
     data['median'] = np.median(data['values'])
     data['min'] = np.min(data['values'])
     data['max'] = np.max(data['values'])
-    return data
 
-
-def console():
-    data = main()
-    for key, value in data.items():
-        print(LINE_TEMPLATE.format(
-            key,
-            str(value).replace('\n', '')
-        ))
+    if args.json:
+        print(json.dumps(data, indent=2))
+    else:
+        for key, value in data.items():
+            print(LINE_TEMPLATE.format(
+                key,
+                str(value).replace('\n', '')
+            ))
 
 
 LINE_TEMPLATE = "{0:15}: {1}"
