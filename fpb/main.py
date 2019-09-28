@@ -1,8 +1,11 @@
 import sys
 import argparse
 import importlib
+import logging
 import numpy as np
 import fpb
+
+logger = logging.getLogger('fpb')
 
 
 parser = argparse.ArgumentParser()
@@ -11,11 +14,15 @@ parser.add_argument('-i', '--iterations', default=10, type=int)
 parser.add_argument('-s', '--size', type=int, default=10**6)
 parser.add_argument('-S', '--size_y', type=int, default=3)
 parser.add_argument('-d', '--dtype', default='float16')
+parser.add_argument('-v', '--verbose', action='count', default=0)
 parser.add_argument('-W', '--warmup', default=1)
 
 
 def main():
     args = parser.parse_args()
+    # Logger
+    logger.setLevel(50 - args.verbose*10)
+    logging.basicConfig(level=logger.level)
     # Get Runner
     module_path = 'fpb.%s' % args.module
     runner_mod = importlib.import_module(module_path)
@@ -33,21 +40,25 @@ def main():
     if '2d' in args.module:
         data['size_y'] = args.size_y
     data.update(runner.extra_data)
+    logger.info("Start warm-up")
     for _ in range(args.warmup):
         try:
             runner.start()
         except Exception as err:
-            print(err)
+            logger.warning(err)
+    logger.debug("End of warm-up")
+    logger.info("Start iterations")
     for _ in range(args.iterations):
         try:
             time_taken, byte_size = runner.start()
         except MemoryError as err:
             data['memory_errors'] += 1
-            print(err)
+            logger.error(err)
             continue
         data['values'].append(time_taken)
         if not 'byte_size' in data:
             data['byte_size'] = byte_size
+    logger.debug("End of iterations")
 
     if not data['values']:
         print("No successful test")

@@ -2,6 +2,9 @@ import sys
 import time
 import math
 import random
+import logging
+
+logger = logging.getLogger('fpb.runner')
 
 
 class TypeTooSmall(Exception):
@@ -19,6 +22,7 @@ class Runner:
 
     def __init__(self, **kwargs):
         for key, value in kwargs.items():
+            logger.debug("Set '%s' = '%s'", key, value)
             setattr(self, key, value)
 
     def get_dtype(self):
@@ -35,15 +39,22 @@ class Runner:
         pass
 
     def start(self):
+        logger.info("Prepare test")
         prepare_kwargs = self.get_prepare_kwargs()
+        logger.debug("Prepare kwargs: %s", prepare_kwargs)
         prepare_kwargs['dtype'] = self.get_dtype()
         data = self.prepare(**prepare_kwargs)
         input_size = sys.getsizeof(data)
+        logger.debug("Prepare done")
 
+        logger.info("Run test")
         run_kwargs = self.get_run_kwargs()
+        logger.debug("Run kwargs: %s", run_kwargs)
         start_time = time.time()
         output = self.run(data, **run_kwargs)
         end_time = time.time()
+        logger.debug("Run done")
+
         self.check_output(output)
         return (
             (end_time - start_time) * 1000,
