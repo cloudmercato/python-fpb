@@ -1,3 +1,4 @@
+import sys
 import time
 import math
 import random
@@ -37,13 +38,17 @@ class Runner:
         prepare_kwargs = self.get_prepare_kwargs()
         prepare_kwargs['dtype'] = self.get_dtype()
         data = self.prepare(**prepare_kwargs)
+        input_size = sys.getsizeof(data)
 
         run_kwargs = self.get_run_kwargs()
         start_time = time.time()
         output = self.run(data, **run_kwargs)
         end_time = time.time()
         self.check_output(output)
-        return (end_time - start_time) * 1000
+        return (
+            (end_time - start_time) * 1000,
+            input_size,
+        )
 
     def prepare(self, **kwargs):
         msg = "Data preparation isn't set."

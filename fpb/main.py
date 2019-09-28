@@ -40,12 +40,14 @@ def main():
             print(err)
     for _ in range(args.iterations):
         try:
-            time_taken = runner.start()
+            time_taken, byte_size = runner.start()
         except MemoryError as err:
             data['memory_errors'] += 1
             print(err)
             continue
         data['values'].append(time_taken)
+        if not 'byte_size' in data:
+            data['byte_size'] = byte_size
 
     if not data['values']:
         print("No successful test")
