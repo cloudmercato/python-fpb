@@ -4,19 +4,31 @@ import importlib
 import logging
 import json
 import numpy as np
-import fpb
+from fpb import utils
 
 logger = logging.getLogger('fpb')
 
-parser = argparse.ArgumentParser()
-parser.add_argument('module')
-parser.add_argument('-i', '--iterations', default=10, type=int)
-parser.add_argument('-v', '--verbose', action='count', default=0)
-parser.add_argument('-j', '--json', action='store_true', default=False)
-parser.add_argument('-s', '--size', type=int, default=10**6)
-parser.add_argument('-S', '--size_y', type=int, default=3)
-parser.add_argument('-d', '--dtype', default='float16')
-parser.add_argument('-W', '--warmup', type=int, default=1)
+LINE_TEMPLATE = "{0:15}: {1}"
+
+parser = argparse.ArgumentParser(
+    description="Measure Python computation performances",
+)
+parser.add_argument('module', help="Module to test.",
+                    choices=utils.RUNNERS)
+parser.add_argument('-i', '--iterations', default=10, type=int,
+                    help="Number of iteration to run.")
+parser.add_argument('-v', '--verbose', action='count', default=0,
+                    help="Verbosity level.")
+parser.add_argument('-j', '--json', action='store_true', default=False,
+                    help="Display output as JSON instead of plain text.")
+parser.add_argument('-s', '--size', type=int, default=10**6,
+                    help="Number of element in X axis.")
+parser.add_argument('-S', '--size_y', type=int, default=3,
+                    help="Number of element in Y axis, for 2D computation.")
+parser.add_argument('-d', '--dtype', default='float16', choices=utils.DTYPES,
+                    help="Data type storing elements")
+parser.add_argument('-W', '--warmup', type=int, default=1,
+                    help="Number of iteration to run before start test.")
 
 
 def console():
@@ -83,9 +95,6 @@ def console():
                 key,
                 str(value).replace('\n', '')
             ))
-
-
-LINE_TEMPLATE = "{0:15}: {1}"
 
 
 if __name__ == '__main__':
