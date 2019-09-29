@@ -30,10 +30,10 @@ class Runner:
         return self._dtype
 
     def get_prepare_kwargs(self):
-        return {}
+        return {}  # noqa
 
     def get_run_kwargs(self):
-        return {}
+        return {}  # noqa
 
     def check_output(self, output):
         pass
@@ -63,11 +63,11 @@ class Runner:
         )
 
     def prepare(self, **kwargs):
-        msg = "Data preparation isn't set."
+        msg = "Data preparation isn't set."  # noqa
         raise NotImplementedError(msg)
 
     def run(self, data, **kwargs):
-        msg = "Run isn't set."
+        msg = "Run isn't set."  # noqa
         raise NotImplementedError(msg)
 
 

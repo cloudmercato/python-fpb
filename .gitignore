@@ -2,3 +2,4 @@ __pycache__
 *.sw[pon]
 fpb.egg-info/
 dist
+.coverage

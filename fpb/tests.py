@@ -11,6 +11,7 @@ OPERATIONS = [
 ]
 MODULES = [
     'python',
+    'python_gen',
     'ctypes',
     'numpy',
     'pandas',
@@ -63,7 +64,7 @@ def make_test_case(operation, module, skip=False):
     return RunnerTest
 
 
-def get_tests():
+def get_suite():
     suite = unittest.TestSuite()
     for operation in OPERATIONS:
         for module_name in MODULES:
@@ -81,6 +82,6 @@ def get_tests():
 
 
 if __name__ == '__main__':
-    suite = get_tests()
+    suite = get_suite()
     test_runner = unittest.TextTestRunner(verbosity=5)
     test_runner.run(suite)
