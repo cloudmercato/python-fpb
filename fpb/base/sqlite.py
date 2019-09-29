@@ -19,6 +19,8 @@ INSERT_2D = "INSERT INTO fpb(x, y) VALUES(?, ?);"
 SUM = "SELECT SUM(x) FROM fpb;"
 SUM_2D = "SELECT SUM(x), SUM(y)  FROM fpb;"
 DROP_TABLE = "DROP TABLE fpb;"
+MAX = "SELECT MAX(x) FROM fpb;"
+AVG = "SELECT AVG(x) FROM fpb;"
 
 
 class BaseSqliteRunner(common.Runner):
