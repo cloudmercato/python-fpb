@@ -56,6 +56,8 @@ class Runner:
         end_time = time.time()
         logger.debug("Run done")
 
+        self.tear_down()
+
         self.check_output(output)
         return (
             (end_time - start_time) * 1000,
@@ -65,6 +67,9 @@ class Runner:
     def prepare(self, **kwargs):
         msg = "Data preparation isn't set."  # noqa
         raise NotImplementedError(msg)
+
+    def tear_down(self):
+        pass
 
     def run(self, data, **kwargs):
         msg = "Run isn't set."  # noqa

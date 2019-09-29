@@ -12,8 +12,8 @@ class BasePython2dRunner(common.Runner2dMixin, common.Runner):
     """Helpers for Runners in 2 dimension array"""
     def prepare(self, size, size_y, **kwargs):
         data = [
-            [self.random.random() for j in range(size_y)]
-            for i in range(size)
+            [self.random.random() for j in range(size)]
+            for i in range(size_y)
         ]
         return data
 

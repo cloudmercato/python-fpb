@@ -24,6 +24,7 @@ MODULES = (
     'cupy',
     'minpy',
     'numba',
+    'sqlite',
 )
 RUNNERS = []
 

@@ -27,6 +27,7 @@ Tools and libraries
 - `CuPy <https://cupy.chainer.org/>`_ : NumPy-compatible matrix library accelerated by CUDA
 - `Numba <https://numba.pydata.org/>`_ : Translates a subset of Python and NumPy code into fast machine code
 - `MinPy <https://github.com/dmlc/minpy>`_ : NumPy interface above MXNet backend (deprecated)
+- `SQLite <https://sqlite.org/index.html>`_ : C-language library that implements a small, fast, self-contained, high-reliability, full-featured, SQL database engine. (for fun)
 
 Install
 -------

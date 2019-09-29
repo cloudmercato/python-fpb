@@ -19,6 +19,7 @@ MODULES = [
     'cupy',
     'minpy',
     'numba',
+    'sqlite',
 ]
 
 def import_runner(operation, module):
