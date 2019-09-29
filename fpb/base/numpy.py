@@ -13,7 +13,7 @@ class BaseNumpyRunner(common.Runner):
         return self.dtype
 
     def check_output(self, output):
-        if self.np.isinf(output).any():
+        if self.np.isinf(output).all().any():
             raise self.TypeTooSmall()
 
 

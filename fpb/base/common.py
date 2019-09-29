@@ -52,6 +52,7 @@ class Runner:
         logger.debug("Run kwargs: %s", run_kwargs)
         start_time = time.time()
         output = self.run(data, **run_kwargs)
+        logger.debug("Output: %s", output)
         end_time = time.time()
         logger.debug("Run done")
 
