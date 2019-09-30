@@ -87,6 +87,8 @@ def console():
     data['min'] = np.min(data['values'])
     data['max'] = np.max(data['values'])
 
+    data['speed'] = 1000 / data['average']
+
     if args.json:
         print(json.dumps(data, indent=2))
     else:
