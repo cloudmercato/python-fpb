@@ -1,8 +1,8 @@
 from fpb.base import cupy
 
 
-class Runner(cupy.BaseCupy1dRunner):
+class Runner(cupy.BaseCupy2dRunner):
     def run(self, data):
-        output = self.cp.sin(data)
+        output = self.cp.sum(data, axis=0)
         output = self.cp.asnumpy(output)
         return output
