@@ -5,9 +5,10 @@ from fpb.base import numba
 def run_(data):
     sum_ = numba.np.sum(data)
     output = sum_ / data.size
-    return data
+    return output
 
 
 class Runner(numba.BaseNumba1dRunner):
     def run(self, data):
-        return run_(data)
+        output = run_(data)
+        return output

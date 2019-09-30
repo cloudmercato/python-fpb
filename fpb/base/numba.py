@@ -14,6 +14,15 @@ class BaseNumbaRunner(numpy.BaseNumpyRunner):
 
 class BaseNumba1dRunner(common.Runner1dMixin, BaseNumbaRunner):
     """Helpers for Numba Runners in 1 dimension array"""
-    def prepare(self, size):
-        data = self.np.random.sample(size)
+    def prepare(self, size, dtype):
+        data = self.np.random.sample(size).astype(dtype)
+        return data
+
+
+class BaseNumba2dRunner(common.Runner2dMixin, BaseNumbaRunner):
+    """Helpers for Numba Runners in 2 dimension array"""
+    def prepare(self, size, size_y, dtype):
+        data = self.np.random.sample(size*size_y)\
+            .reshape(size, size_y)\
+            .astype(dtype)
         return data

@@ -4,7 +4,7 @@ from fpb.base import numba
 @numba.nb.njit
 def run_(data):
     output = numba.np.sum(data)
-    return data
+    return output
 
 
 class Runner(numba.BaseNumba1dRunner):
