@@ -5,5 +5,5 @@ class Runner(ctypes.BaseCtypes1dRunner):
     def run(self, data):
         output = 0
         for i in range(len(data)):
-            output += output + data[i]
+            output = output + data[i]
         return output
