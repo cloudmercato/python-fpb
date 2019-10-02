@@ -24,6 +24,7 @@ MODULES = (
     'cupy',
     'minpy',
     'numba',
+    'pycuda',
     'sqlite',
     'dask',
     'dask_cupy',
