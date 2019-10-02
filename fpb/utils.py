@@ -20,6 +20,7 @@ MODULES = (
     'ctypes',
     'numpy',
     'pandas',
+    'cudamat',
     'cupy',
     'minpy',
     'numba',
