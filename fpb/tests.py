@@ -1,26 +1,8 @@
 import sys
 import unittest
 import importlib
+from fpb import utils
 
-OPERATIONS = [
-    'sum',
-    'sum2d',
-    'sin',
-    'avg',
-    'max',
-]
-MODULES = [
-    'python',
-    'python_gen',
-    'ctypes',
-    'numpy',
-    'pandas',
-    'dask',
-    'cupy',
-    'minpy',
-    'numba',
-    'sqlite',
-]
 
 def import_runner(operation, module):
     module_path = 'fpb.%s.%s' % (operation, module)
@@ -67,8 +49,8 @@ def make_test_case(operation, module, skip=False):
 
 def get_suite():
     suite = unittest.TestSuite()
-    for operation in OPERATIONS:
-        for module_name in MODULES:
+    for operation in utils.OPERATIONS:
+        for module_name in utils.MODULES:
             try:
                 runner_mod = import_runner(operation, module_name)
                 skip = False

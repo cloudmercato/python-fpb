@@ -22,7 +22,7 @@ class BaseDaskRunner(numpy.BaseNumpyRunner):
 class BaseDask1dRunner(common.Runner1dMixin, BaseDaskRunner):
     """Helpers for Dask Runners in 1 dimension array"""
     def prepare(self, size, dtype):
-        chunksize = size / multiprocessing.cpu_count()
+        chunksize = int(size / multiprocessing.cpu_count())
         data = self.da.random.random(size, chunks=chunksize)\
             .astype(dtype)
         return data

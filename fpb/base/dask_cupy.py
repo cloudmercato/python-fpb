@@ -35,7 +35,7 @@ class BaseDaskCupyRunner(dask.BaseDaskRunner):
 class BaseDaskCupy1dRunner(common.Runner1dMixin, BaseDaskCupyRunner):
     """Helpers for Dask CuPy Runners in 1 dimension array"""
     def prepare(self, size, dtype):
-        chunksize = size / self.device_processor_count
+        chunksize = int(size / self.device_processor_count)
         data = self.random.random_sample(size, chunks=chunksize)\
             .astype(dtype)
         return data
