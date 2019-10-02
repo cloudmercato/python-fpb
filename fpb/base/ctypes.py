@@ -26,9 +26,10 @@ class BaseCtypes1dRunner(common.Runner1dMixin, Runner):
 
 class BaseCtypes2dRunner(common.Runner2dMixin, Runner):
     """Helpers for ctypes Runners in 2 dimension array"""
-    def prepare(self, size, size_y):
+    def prepare(self, size, size_y, dtype):
+        ctype = getattr(ctypes, dtype)
         data = [
-            [self.random.random() for j in range(size_y)]
-            for i in range(size)
+            (ctype * size)(*[self.random.random() for i in range(size)])
+            for i in range(size_y)
         ]
         return data
