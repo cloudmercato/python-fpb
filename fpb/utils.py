@@ -20,11 +20,12 @@ MODULES = (
     'ctypes',
     'numpy',
     'pandas',
-    'dask',
     'cupy',
     'minpy',
     'numba',
     'sqlite',
+    'dask',
+    'dask_cupy',
 )
 RUNNERS = []
 
