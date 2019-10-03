@@ -29,6 +29,7 @@ MODULES = (
     'sqlite',
     'dask',
     'dask_cupy',
+    'spark',
 )
 RUNNERS = []
 

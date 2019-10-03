@@ -25,6 +25,8 @@ Tools and libraries
 - `Pandas <https://pandas.pydata.org/>`_ : high-performance, easy-to-use data structures and data analysis tools
 - `Dask <https://dask.org/>`_ : Advanced parallelism for analytics, enabling performance at scale
 - `CuPy <https://cupy.chainer.org/>`_ : NumPy-compatible matrix library accelerated by CUDA
+- `PyCUDA <https://developer.nvidia.com/pycuda>`_ : Nvidia's CUDA parallel computation API from Python
+- `CUDAMat <https://github.com/cudamat/cudamat>`_ : Performs basic matrix calculations on CUDA-enabled GPUs from Python
 - `Numba <https://numba.pydata.org/>`_ : Translates a subset of Python and NumPy code into fast machine code
 - `MinPy <https://github.com/dmlc/minpy>`_ : NumPy interface above MXNet backend (deprecated)
 - `SQLite <https://sqlite.org/index.html>`_ : C-language library that implements a small, fast, self-contained, high-reliability, full-featured, SQL database engine. (for fun)
