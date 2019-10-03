@@ -12,7 +12,11 @@ class BaseDaskCupyRunner(dask.BaseDaskRunner):
         'cupy_version': cp.__version__,
     }
     random = dask.da.random.RandomState(RandomState=cp.random.RandomState)
-    scheduler = 'threads'
+
+    memory_error_codes = [
+        'CURAND_STATUS_ALLOCATION_FAILED',
+        'CURAND_STATUS_PREEXISTING_FAILURE',
+    ]
 
     def check_output(self, output):
         if self.da.isinf(output).any():
@@ -36,8 +40,14 @@ class BaseDaskCupy1dRunner(common.Runner1dMixin, BaseDaskCupyRunner):
     """Helpers for Dask CuPy Runners in 1 dimension array"""
     def prepare(self, size, dtype):
         chunksize = int(size / self.device_processor_count)
-        data = self.random.random_sample(size, chunks=chunksize)\
-            .astype(dtype)
+        chunksize = max([chunksize, 10e9])
+        try:
+            data = self.random.random_sample(size, chunks=chunksize)\
+                .astype(dtype)
+        except self.cp.cuda.curand.CURANDError as err:
+            if err.args[0] in self.memory_error_codes:
+                raise MemoryError(err.args[0])
+            raise
         return data
 
 
@@ -45,8 +55,13 @@ class BaseDaskCupy2dRunner(common.Runner2dMixin, BaseDaskCupyRunner):
     """Helpers for Dask CuPy Runners in 2 dimension array"""
     def prepare(self, size, size_y, dtype):
         chunksize = (1, size)
-        data = self.random\
-            .random_sample((size_y, size))\
-            .rechunk(chunksize)\
-            .astype(dtype)
+        try:
+            data = self.random\
+                .random_sample((size_y, size))\
+                .rechunk(chunksize)\
+                .astype(dtype)
+        except self.cp.cuda.curand.CURANDError as err:
+            if err.args[0] in self.memory_error_codes:
+                raise MemoryError(err.args[0])
+            raise
         return data

@@ -14,6 +14,8 @@ class BaseDaskRunner(numpy.BaseNumpyRunner):
         'dask_version': dask.__version__,
     }
 
+    scheduler = 'threads'
+
     def check_output(self, output):
         if self.da.isinf(output).any():
             raise self.TypeTooSmall()
@@ -36,4 +38,19 @@ class BaseDask2dRunner(common.Runner2dMixin, BaseDaskRunner):
             .random((size, size_y))\
             .rechunk(chunksize)\
             .astype(dtype)
+        return data
+
+
+class BaseDaskDataframe2dRunner(BaseDask2dRunner):
+    """Helpers for Dask Runners in 2 dataframes"""
+    def check_output(self, output):
+        pass
+
+    def prepare(self, size, size_y, dtype):
+        chunksize = (int(size / multiprocessing.cpu_count()), 1)
+        da_data = self.da.random\
+            .random((size, size_y))\
+            .rechunk(chunksize)\
+            .astype(dtype)
+        data = da_data.to_dask_dataframe()
         return data

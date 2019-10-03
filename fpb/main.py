@@ -74,20 +74,30 @@ def console():
     logger.debug("End of iterations")
 
     if not data['values']:
-        print("No successful test")
-        sys.exit(1)
+        data.update({
+            'average': 0,
+            'stddev': 0,
+            'percentile_99': 0,
+            'percentile_95': 0,
+            'percentile_90': 0,
+            'percentile_75': 0,
+            'median': 0,
+            'min': 0,
+            'max': 0,
+            'speed': 0,
+        })
+    else:
+        data['average'] = np.average(data['values'])
+        data['stddev'] = np.std(data['values'])
+        data['percentile_99'] = np.percentile(data['values'], 99)
+        data['percentile_95'] = np.percentile(data['values'], 95)
+        data['percentile_90'] = np.percentile(data['values'], 90)
+        data['percentile_75'] = np.percentile(data['values'], 75)
+        data['median'] = np.median(data['values'])
+        data['min'] = np.min(data['values'])
+        data['max'] = np.max(data['values'])
 
-    data['average'] = np.average(data['values'])
-    data['stddev'] = np.std(data['values'])
-    data['percentile_99'] = np.percentile(data['values'], 99)
-    data['percentile_95'] = np.percentile(data['values'], 95)
-    data['percentile_90'] = np.percentile(data['values'], 90)
-    data['percentile_75'] = np.percentile(data['values'], 75)
-    data['median'] = np.median(data['values'])
-    data['min'] = np.min(data['values'])
-    data['max'] = np.max(data['values'])
-
-    data['speed'] = 1000 / data['average']
+        data['speed'] = 1000 / data['average']
 
     if args.json:
         print(json.dumps(data, indent=2))

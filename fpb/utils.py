@@ -13,6 +13,7 @@ OPERATIONS = (
     'sin',
     'avg',
     'max',
+    'corr',
 )
 MODULES = (
     'python',
