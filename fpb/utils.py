@@ -32,6 +32,7 @@ MODULES = (
     'spark',
     'bottleneck',
     'numexpr',
+    'xarray',
 )
 RUNNERS = []
 
