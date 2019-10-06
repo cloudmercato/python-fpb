@@ -33,6 +33,7 @@ MODULES = (
     'bottleneck',
     'numexpr',
     'xarray',
+    'mpmath',
 )
 RUNNERS = []
 
