@@ -30,6 +30,7 @@ MODULES = (
     'dask',
     'dask_cupy',
     'spark',
+    'bottleneck',
 )
 RUNNERS = []
 
