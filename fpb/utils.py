@@ -34,6 +34,7 @@ MODULES = (
     'numexpr',
     'xarray',
     'mpmath',
+    # 'mpmath_gmpy',
 )
 RUNNERS = []
 
